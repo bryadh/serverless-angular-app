@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BrandService } from 'src/app/brand.service';
 
 @Component({
   selector: 'app-product-form',
@@ -6,10 +7,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./product-form.component.css']
 })
 export class ProductFormComponent implements OnInit {
-
-  constructor() { }
+  
+  isLoading: boolean = true;
+  
+  brands = [];
+  constructor(brandService: BrandService) {
+    brandService.getBrands().subscribe(res => {
+      console.log('RES => ', res);
+      this.brands = Object.keys(res).map(key => ({ key, value: res[key]}));
+      this.isLoading = false;
+      console.log('BRANDS => ', this.brands);
+    });
+  }
 
   ngOnInit(): void {
   }
-
 }
