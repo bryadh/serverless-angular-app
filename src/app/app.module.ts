@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { environment } from 'src/environments/environment';
+import { CustomFormsModule } from 'ng2-validation';
 
 // FIREBASE
 import { AngularFireModule } from '@angular/fire';
@@ -29,7 +30,6 @@ import { UserService } from './user.service';
 import { AdminAuthGuardService } from './admin-auth-guard.service';
 import { ProductFormComponent } from './admin/product-form/product-form.component';
 import { BrandService } from './brand.service';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ProductService } from './product.service';
 
 
@@ -54,6 +54,7 @@ import { ProductService } from './product.service';
     AngularFireStorageModule,
     AngularFireAuthModule,
     NgbModule,
+    CustomFormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
       { path: 'products', component: ProductsComponent },

@@ -2,29 +2,43 @@
 <form #f="ngForm" (ngSubmit)="save(f.value)">
     <div class="form-group">
         <label for="Model">Model</label>
-        <input ngModel name="model" id="Model" type="text" class="form-control">
+        <input #model="ngModel" ngModel name="model" id="Model" type="text" class="form-control" required>
+        <div class="alert alert-danger" *ngIf="model.touched && model.invalid">
+            Model is required.
+        </div>
     </div>
     <div class="form-group">
         <label for="price">Price</label>
         <div class="input-group">
             <span class="input-group-text">$</span>
-            <input ngModel name="price" id="price" type="number" class="form-control">
+            <input #price="ngModel" ngModel name="price" id="price" type="number" class="form-control" required [min]="0">
             <span class="input-group-text">.00</span>
+        </div>
+        <div class="alert alert-danger" *ngIf="price.touched && price.invalid">
+            <div *ngIf="price.errors.required">Price is required.</div>
+            <div *ngIf="price.errors.min">Price should be 0 or higher.</div>
         </div>
     </div>
     <div *ngIf="!isLoading" class="form-group">
         <label for="Brand">Brand</label>
-        <select ngModel name="brand" id="Brand" class="form-control">
+        <select #brand="ngModel" ngModel name="brand" id="Brand" class="form-control" required>
             <option [value]="">
             </option>
             <option *ngFor="let brand of brands" [value]="brand.key">
                 {{ brand.value.name }}
             </option>
         </select>
+        <div class="alert alert-danger" *ngIf="brand.touched && brand.invalid">
+            brand is required.
+        </div>
     </div>
     <div class="form-group">
         <label for="imageUrl">Image URL</label>
-        <input ngModel name="imageUrl" id="imageUrl" type="text" class="form-control">
+        <input #imageUrl="ngModel" ngModel name="imageUrl" id="imageUrl" type="text" class="form-control" required url>
+        <div class="alert alert-danger" *ngIf="imageUrl.touched && imageUrl.invalid">
+            <div *ngIf="imageUrl.errors.required">Image URL is required.</div>
+            <div *ngIf="imageUrl.errors.url">Please entrer a valid URL.</div>
+        </div>
     </div>
     <button class="btn btn-primary" style="margin-top: 1rem;">Save</button>
 </form>
