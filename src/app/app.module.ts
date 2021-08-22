@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
+import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { environment } from 'src/environments/environment';
 
@@ -31,6 +30,7 @@ import { AdminAuthGuardService } from './admin-auth-guard.service';
 import { ProductFormComponent } from './admin/product-form/product-form.component';
 import { BrandService } from './brand.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ProductService } from './product.service';
 
 
 @NgModule({
@@ -49,10 +49,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireStorageModule,
     AngularFireAuthModule,
-    BrowserAnimationsModule,
     NgbModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
@@ -66,15 +66,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       { path: 'admin/products/new', component: ProductFormComponent, canActivate: [AuthGuardService] },
       { path: 'admin/orders', component: AdminOrdersComponent, canActivate: [AuthGuardService] },
     ]),
-    NgbModule,
-    BrowserAnimationsModule
+    NgbModule
   ],
   providers: [
     AuthService,
     AuthGuardService,
     AdminAuthGuardService,
     UserService,
-    BrandService
+    BrandService,
+    ProductService
   ],
   bootstrap: [
     AppComponent

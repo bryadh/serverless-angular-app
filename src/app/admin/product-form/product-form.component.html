@@ -1,20 +1,20 @@
 
-<form>
+<form #f="ngForm" (ngSubmit)="save(f.value)">
     <div class="form-group">
         <label for="Model">Model</label>
-        <input id="Model" type="text" class="form-control">
+        <input ngModel name="model" id="Model" type="text" class="form-control">
     </div>
     <div class="form-group">
         <label for="price">Price</label>
         <div class="input-group">
             <span class="input-group-text">$</span>
-            <input id="price" type="number" class="form-control">
+            <input ngModel name="price" id="price" type="number" class="form-control">
             <span class="input-group-text">.00</span>
         </div>
     </div>
     <div *ngIf="!isLoading" class="form-group">
         <label for="Brand">Brand</label>
-        <select  id="Brand" class="form-control">
+        <select ngModel name="brand" id="Brand" class="form-control">
             <option [value]="">
             </option>
             <option *ngFor="let brand of brands" [value]="brand.key">
@@ -24,7 +24,7 @@
     </div>
     <div class="form-group">
         <label for="imageUrl">Image URL</label>
-        <input id="imageUrl" type="text" class="form-control">
+        <input ngModel name="imageUrl" id="imageUrl" type="text" class="form-control">
     </div>
     <button class="btn btn-primary" style="margin-top: 1rem;">Save</button>
 </form>
