@@ -63,8 +63,9 @@ import { ProductService } from './product.service';
       { path: 'my/orders', component: MyOrdersComponent, canActivate: [AuthGuardService] },
       { path: 'check-out', component: CheckOutComponent, canActivate: [AuthGuardService] },
       { path: 'order-success', component: OrderSuccessComponent, canActivate: [AuthGuardService] },
-      { path: 'admin/products', component: AdminProductsComponent, canActivate: [AuthGuardService] },
       { path: 'admin/products/new', component: ProductFormComponent, canActivate: [AuthGuardService] },
+      { path: 'admin/products/:id', component: ProductFormComponent, canActivate: [AuthGuardService] },
+      { path: 'admin/products', component: AdminProductsComponent, canActivate: [AuthGuardService] },
       { path: 'admin/orders', component: AdminOrdersComponent, canActivate: [AuthGuardService] },
     ]),
     NgbModule

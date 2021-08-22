@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BrandService } from 'src/app/brand.service';
 import { ProductService } from 'src/app/product.service';
+import 'rxjs/add/operator/take';
 
 @Component({
   selector: 'app-product-form',
@@ -10,23 +12,43 @@ import { ProductService } from 'src/app/product.service';
 export class ProductFormComponent implements OnInit {
   
   isLoading: boolean = true;
+  id;
   brands = [];
+  product:any = {};
 
   constructor(
-    brandService: BrandService,
+    private brandService: BrandService,
+    private router: Router,
+    private route: ActivatedRoute,
     private productService: ProductService
     ) {
-    brandService.getBrands().subscribe(res => {
+    brandService.getBrands()
+    .take(1)
+    .subscribe(res => {
       this.brands = Object.keys(res).map(key => ({ key, value: res[key]}));
       this.isLoading = false;
     });
+    this.id = this.route.snapshot.paramMap.get('id');
+    if (this.id) {
+      this.productService.get(this.id)
+      .take(1)
+      .subscribe(p => {
+        console.log('THE PRODUCT => ', p);
+        this.product = p;
+      })
+    }
   }
 
   ngOnInit(): void {
   }
 
-  save(product) {
-    this.productService.create(product)
+  save(formProduct) {
+    if (this.id) {
+      this.productService.update(this.id, formProduct);
+    } else {
+      this.productService.create(formProduct);
+    }
+    this.router.navigate(['/admin/products']);
   }
 
 }

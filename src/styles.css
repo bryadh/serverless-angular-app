@@ -3,9 +3,9 @@
 
 body {
     padding-top: 5rem;
+    height: 100%; 
   }
   .starter-template {
     padding: 3rem 1.5rem;
     text-align: center;
   }
-html, body { height: 100%; }
