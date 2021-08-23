@@ -14,7 +14,7 @@ export class BrandService {
 
   getBrands() {
     let obs$ = new Observable((observer) => {
-      firebase.database().ref('brands').on('value', (snapshot) => {
+      firebase.database().ref('brands').orderByChild('name').on('value', (snapshot) => {
         observer.next(snapshot.val());
       });
     })

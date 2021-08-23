@@ -12,6 +12,7 @@
     <thead>
         <tr>
             <th>Model</th>
+            <th>Brand</th>
             <th>Price</th>
             <th></th>
         </tr>
@@ -19,7 +20,8 @@
     <tbody>
         <tr *ngFor="let p of filteredProducts">
             <td>{{ p.value.model }}</td>
-            <td>{{ p.value.price }}</td>
+            <td>{{ p.value.brand }}</td>
+            <td>{{ p.value.price }}.00$</td>
             <td>
                 <a class="btn btn-primary" [routerLink]="['/admin/products/', p.key]">Edit</a>
             </td>
