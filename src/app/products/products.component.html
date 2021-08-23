@@ -1,33 +1,12 @@
 <div class="row">
     <div class="col-3">
-        <div class="list-gorup" style="margin-top: 5rem;">
-            <a 
-                [class.active] = "!brand"
-                routerLink="/"
-                class="list-group-item list-group-item-action">
-            </a>
-            <a 
-                *ngFor="let b of brands"
-                [class.active]="brand === b.key"
-                class="list-group-item list-group-item-action"
-                routerLink="/"
-                [queryParams]="{brand: b.key }">
-                {{ b.value.name }}
-            </a>
-        </div>
+        <app-product-filter [brand]="brand"></app-product-filter>
     </div>
     <div class="col">
         <div class="row">
             <ng-container *ngFor = "let p of filteredProducts; let i = index">
-                <div class="col" style="margin-top: 5rem;">
-                    <div class="card" style="width: 18rem;">
-                        <img src="{{ p.value.imageUrl }}" class="card-img-top">
-                        <div class="card-body">
-                          <h5 class="card-title">{{ p.value.brand }} - {{ p.value.model }}</h5>
-                          <p class="card-text">{{ p.value.price | currency:'USD':true }}</p>
-                          <a href="#" class="btn btn-primary">Add to Cart</a>
-                        </div>
-                    </div>
+                <div class="col">
+                    <app-product-card [product]="p"></app-product-card>
                 </div>
                 <div *ngIf="(i + 1) % 2 === 0" class="w-100"></div>
             </ng-container> 

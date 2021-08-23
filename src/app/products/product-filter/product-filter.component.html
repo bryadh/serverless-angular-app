@@ -1,0 +1,18 @@
+<div class="sticky-top">
+    <div class="list-gorup">
+        <a 
+            [class.active] = "!brand"
+            routerLink="/"
+            class="list-group-item list-group-item-action">
+            All brands
+        </a>
+        <a 
+            *ngFor="let b of brands"
+            [class.active]="brand === b.key"
+            class="list-group-item list-group-item-action"
+            routerLink="/"
+            [queryParams]="{brand: b.key }">
+            {{ b.value.name }}
+        </a>
+    </div>
+</div>

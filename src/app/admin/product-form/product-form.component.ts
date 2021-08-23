@@ -34,7 +34,8 @@ export class ProductFormComponent implements OnInit {
       .take(1)
       .subscribe(p => {
         console.log('THE PRODUCT => ', p);
-        this.product = p;
+        this.product = {key: this.id, value: p}
+        console.log('THE NEW PRODUCT =>', this.product);
       })
     }
   }
