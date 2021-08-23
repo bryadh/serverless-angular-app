@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { BrandService } from '../brand.service';
 import { Product } from '../models/product';
 import { ProductService } from '../product.service';
 @Component({
@@ -8,12 +10,33 @@ import { ProductService } from '../product.service';
 })
 export class ProductsComponent implements OnInit {
 
-  products : Product[];
+  products : Product[] = [];
+  filteredProducts : Product[] = [];
+  brands = [];
+  brand: string;
 
-  constructor(productService: ProductService) {
-    productService.getAll().subscribe(res => {
-      this.products = Object.keys(res).map(key => ({ key, value: res[key]}));
-    })
+  constructor(
+    route: ActivatedRoute,
+    productService: ProductService,
+    brandService: BrandService) { 
+      // get all the brands
+      brandService.getBrands()
+        .take(1)
+        .subscribe(res => {
+          this.brands = Object.keys(res).map(key => ({ key, value: res[key]}));
+      });
+      // get all the products
+      productService.getAll().subscribe(res => {
+        this.products = Object.keys(res).map(key => ({ key, value: res[key]}));
+
+        route.queryParamMap.subscribe(res => {
+          this.brand = res.get('brand');
+  
+          this.filteredProducts = (this.brand) ? 
+            this.products.filter(p => p.value.brand === this.brand) :
+            this.products
+        });
+      });
    }
 
   ngOnInit(): void {
