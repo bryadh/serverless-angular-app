@@ -46,7 +46,7 @@
         </form>
     </div>
     <div class="col-md-6">
-        <div class="card" >
+        <div *ngIf="product.model" class="card" >
             <img [src]="product.imageUrl" class="card-img-top" *ngIf="product.imageUrl">
             <div class="card-body">
               <h6 class="card-title">{{ product.brand }} - {{ product.model }}</h6>
