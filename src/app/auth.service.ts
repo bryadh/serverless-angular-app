@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { AppUser } from './models/app-user';
 import { UserService } from './user.service';
 import 'rxjs/add/operator/switchMap';
+import { of } from 'rxjs/observable/of';
 
 // FIREBASE
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -32,6 +33,16 @@ export class AuthService {
 
   logout() {
     this.afAuth.signOut();
+  }
+
+  get appUser$(): Observable<AppUser> {
+    return this.user$
+      .switchMap(user => {
+        if (user) return this.userService.get(user.uid)
+
+        return of(null);
+      })
+
   }
 
 }

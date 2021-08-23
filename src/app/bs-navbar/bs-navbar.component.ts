@@ -9,8 +9,10 @@ import { AppUser } from '../models/app-user';
 })
 export class BsNavbarComponent {
   
-  constructor(public auth: AuthService) { 
-    
+  appUser: AppUser;
+  
+  constructor(private auth: AuthService) { 
+    auth.appUser$.subscribe(res => this.appUser = res);
   }
 
   logout() {

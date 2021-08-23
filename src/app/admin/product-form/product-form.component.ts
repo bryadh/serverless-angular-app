@@ -33,9 +33,7 @@ export class ProductFormComponent implements OnInit {
       this.productService.get(this.id)
       .take(1)
       .subscribe(p => {
-        console.log('THE PRODUCT => ', p);
         this.product = {key: this.id, value: p}
-        console.log('THE NEW PRODUCT =>', this.product);
       })
     }
   }

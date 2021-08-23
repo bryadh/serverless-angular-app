@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { AuthService } from './auth.service';
 import { UserService } from './user.service';
 import { Observable, of } from 'rxjs';
@@ -15,8 +15,7 @@ export class AdminAuthGuardService implements CanActivate{
     ) { }
 
   canActivate(): Observable<boolean> {
-    // Firebase implementatio changed
-    // Admin auth guard not working anymore
-    return of<boolean>(false);
-  }
+    return this.auth.appUser$
+      .map(appUser => appUser.isAdmin);
+  } 
 }

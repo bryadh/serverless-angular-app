@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AppUser } from './models/app-user';
-import { of } from 'rxjs/observable/of';
 
 // FIREBASE
 import firebase from 'firebase/app';
@@ -22,6 +21,15 @@ export class UserService {
       name: user.displayName,
       email: user.email
     });
+  }
+
+  get(uid: string): Observable<any> {
+    let obs$ = new Observable((observer) => {
+      firebase.database().ref('users/' + uid).on('value', (snapshot) => {
+        observer.next(snapshot.val());
+      });
+    });
+    return obs$;
   }
 
 }
