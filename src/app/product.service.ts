@@ -37,5 +37,9 @@ export class ProductService {
   update(productId, product) {
     return firebase.database().ref('/products/' + productId).set(product);
   }
+
+  delete(productId) {
+    return firebase.database().ref('/products/' + productId).remove();
+  }
   
 }
