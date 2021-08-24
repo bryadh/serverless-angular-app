@@ -25,16 +25,25 @@ export class AuthService {
     this.user$ = afAuth.authState;
   }
 
+  /**
+   * Login with google
+   */
   login() {
     let returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/';
     localStorage.setItem('returnUrl', returnUrl);
     this.afAuth.signInWithRedirect(new firebase.default.auth.GoogleAuthProvider());
   }
 
+  /**
+   * Logout
+   */
   logout() {
     this.afAuth.signOut();
   }
 
+  /**
+   * Returns an Observable of the current logged user
+   */
   get appUser$(): Observable<AppUser> {
     return this.user$
       .switchMap(user => {

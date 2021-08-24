@@ -22,20 +22,23 @@ export class ProductFormComponent implements OnInit {
     private route: ActivatedRoute,
     private productService: ProductService
     ) {
-    brandService.getBrands()
-    .take(1)
-    .subscribe(res => {
-      this.brands = Object.keys(res).map(key => ({ key, value: res[key]}));
-      this.isLoading = false;
-    });
-    this.id = this.route.snapshot.paramMap.get('id');
-    if (this.id) {
-      this.productService.get(this.id)
+
+      this.id = this.route.snapshot.paramMap.get('id');
+
+      // get all the brands
+      brandService.getBrands()
       .take(1)
-      .subscribe(p => {
-        this.product = {key: this.id, value: p}
-      })
-    }
+      .subscribe(res => {
+        this.brands = Object.keys(res).map(key => ({ key, value: res[key]}));
+        this.isLoading = false;
+      });
+      if (this.id) {
+        this.productService.get(this.id)
+        .take(1)
+        .subscribe(p => {
+          this.product = {key: this.id, value: p}
+        })
+      }
   }
 
   ngOnInit(): void {

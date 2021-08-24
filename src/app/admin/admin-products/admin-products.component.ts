@@ -13,7 +13,9 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
   products : Product[];
   filteredProducts = [];
 
-  constructor(private productService: ProductService) { 
+  constructor(private productService: ProductService) {
+
+    // get all the products from ProductService
     this.subscription = productService.getAll().subscribe(res => {
       this.filteredProducts = this.products = Object.keys(res).map(key => ({ key, value: res[key]}));
     })
@@ -22,7 +24,11 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
   }
 
-
+  /**
+   * Applies string filter in the search bar.
+   * Template will display filteredProducts if a filter is applied;
+   * @param query string
+   */
   filter(query: string) {
     this.filteredProducts = (query) ? 
       this.products.filter(p => p.value.model.toLowerCase().includes(query.toLowerCase())) :

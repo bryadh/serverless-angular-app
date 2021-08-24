@@ -11,7 +11,12 @@ import "firebase/database";
 export class BrandService {
 
   constructor() {}
-
+  
+  /**
+   * Gets a list of brands from firebase and wrapping them inside an obseravable.
+   * the observable will emit the list
+   * @returns Observable
+   */
   getBrands() {
     let obs$ = new Observable((observer) => {
       firebase.database().ref('brands').orderByChild('name').on('value', (snapshot) => {

@@ -13,7 +13,11 @@ export class AdminAuthGuardService implements CanActivate{
     private auth: AuthService,
     private userService: UserService
     ) { }
-
+  
+  /**
+   * Checks the value of the isAdmin attribute of the authenticated user
+   * @returns Observable<boolean>
+   */
   canActivate(): Observable<boolean> {
     return this.auth.appUser$
       .map(appUser => appUser.isAdmin);

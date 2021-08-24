@@ -16,13 +16,25 @@ export class UserService {
 
   constructor(private db: AngularFirestore) { }
 
+
+  /**
+   * Saves a new user in firebase realtime database
+   * @param user 
+   */
   save(user: firebaseTools.default.User) {
     firebase.database().ref('/users/' + user.uid).update({
       name: user.displayName,
-      email: user.email
+      email: user.email,
+      isAdmin: false
     });
   }
 
+  /**
+   * Gets user from firebase and wrapping it inside an observable.
+   * the observable will emit the value of fetched user
+   * @param uid 
+   * @returns Observable
+   */
   get(uid: string): Observable<any> {
     let obs$ = new Observable((observer) => {
       firebase.database().ref('users/' + uid).on('value', (snapshot) => {

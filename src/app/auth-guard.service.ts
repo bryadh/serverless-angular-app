@@ -12,7 +12,14 @@ export class AuthGuardService implements CanActivate {
     private auth: AuthService,
     private router: Router
     ) { }
-
+  
+  /**
+   * Checks if the user is logged in.
+   * Redirects to the login page if not the case
+   * @param route 
+   * @param state 
+   * @returns 
+   */
   canActivate(route, state: RouterStateSnapshot) {
     return this.auth.user$.map(res => {
       if (res) return true;
