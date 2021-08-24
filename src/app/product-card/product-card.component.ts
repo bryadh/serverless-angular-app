@@ -18,10 +18,9 @@ export class ProductCardComponent implements OnInit {
   }
 
   addToCart(product: Product) {
-    console.log('CALL TO addToCart');
-    this.shoppingCartServie.addToCart(product).subscribe(res => {
-      console.log('RESULT IN COMPONENT => ' , res);
-    })
+    this.shoppingCartServie.addToCart(product)
+      .take(1)
+      .subscribe();
   }
 
 }
