@@ -5,3 +5,7 @@
 .card-footer {
     padding: 0;
 }
+
+div.col-8 {
+    font-weight: bold;
+}

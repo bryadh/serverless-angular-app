@@ -34,10 +34,9 @@ export class ProductFormComponent implements OnInit {
       });
       if (this.id) {
         this.productService.get(this.id)
-        .take(1)
-        .subscribe(p => {
-          this.product = {key: this.id, value: p}
-        })
+          .subscribe(p => {
+            this.product = {key: this.id, value: p}
+          })
       }
   }
 

@@ -13,7 +13,13 @@ export class ShoppingCartService {
 
   constructor() { }
 
-  private getCart(cartId) {
+  /**
+   * Gets a shopping cart and wrapps it inside an observable.
+   * The observable will emit the value of the cart
+   * @returns Observable
+   */
+  getCart() {
+    let cartId = this.getOrCreateCartId();
     let obs$ = new Observable((observer) => {
       firebase.database().ref('shopping-carts/' + cartId).on('value', (snapshot) => {
         observer.next(snapshot.val());
@@ -48,10 +54,9 @@ export class ShoppingCartService {
     if (!cartId) {
       let result;
       this.create()
-      .take(1)
-      .subscribe(res => {
-        result = Object.keys(res).map(key => ({ key, value: res[key]}));
-      })
+        .subscribe(res => {
+          result = Object.keys(res).map(key => ({ key, value: res[key]}));
+        })
       localStorage.setItem('cartId', result.key);
       return result.key;
     } 
