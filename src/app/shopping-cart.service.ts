@@ -27,6 +27,24 @@ export class ShoppingCartService {
     })
     return obs$;
   }
+  
+  /**
+   * Calls the changeItemQuantity function method to get an observable
+   * @param product Product
+   * @returns Observable
+   */
+  addToCart(product: Product){
+    return this.changeItemQuantity(product, 1);
+  }
+
+  /**
+   * Calls the changeItemQuantity function method to get an observable
+   * @param product Product
+   * @returns Observable
+   */
+  removeFromCart(product: Product) {
+    return this.changeItemQuantity(product, -1);
+  }
 
   /**
    * Creats a new shopping cart and wrapping it inside an observable.
@@ -64,16 +82,6 @@ export class ShoppingCartService {
   }
 
   /**
-   * Calls the pushToCart function method to get an observable
-   * @param product Product
-   * @returns Observable
-   */
-  addToCart(product: Product){
-    let cartId = this.getOrCreateCartId();
-    return this.pushToCart(cartId, product);
-  }
-
-  /**
    * Gets shopping cart item from firebase
    * @param cartId 
    * @param productId 
@@ -84,22 +92,24 @@ export class ShoppingCartService {
   }
 
   /**
-   * Adds a product to the shopping cart.
-   * Increments the quantity if the product is already inside the shopping cart
+   * Adds or removes a product from the shopping cart.
    * @param cartId 
    * @param product 
    * @returns Observable
    */
-  private pushToCart(cartId, product: Product) {
+  private changeItemQuantity(product: Product, change: number) {
+    let cartId = this.getOrCreateCartId();
     let obs$ = new Observable((observer) => {
       this.getItem(cartId, product.key).get().then((snapshot) => {
         this.getItem(cartId, product.key).update({
           product: product,
-          quantity: (snapshot.val() ? snapshot.val().quantity : 0) + 1
+          quantity: (snapshot.val() ? snapshot.val().quantity : 0) + change
         });
         observer.next(snapshot.val())
       });
     });
     return obs$;
   }
+
+
 }

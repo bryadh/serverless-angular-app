@@ -13,13 +13,19 @@ export class ProductCardComponent implements OnInit {
   @Input('show-actions') showActions = true;
   @Input('shopping-cart') shoppingCart;
   
-  constructor(private shoppingCartServie: ShoppingCartService) { }
+  constructor(private shoppingCartService: ShoppingCartService) { }
 
   ngOnInit(): void {
   }
 
-  addToCart(product: Product) {
-    this.shoppingCartServie.addToCart(product)
+  addToCart() {
+    this.shoppingCartService.addToCart(this.product)
+      .take(1)
+      .subscribe();
+  }
+
+  removeFromCart() {
+    this.shoppingCartService.removeFromCart(this.product)
       .take(1)
       .subscribe();
   }
