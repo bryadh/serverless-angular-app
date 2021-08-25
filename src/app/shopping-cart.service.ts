@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Product } from './models/product';
+import { ShoppingCart } from './models/shopping-cart';
+import 'rxjs/add/operator/map';
 
 // FIREBASE
 import firebase from "firebase/app";
 import "firebase/database";
-import { Observable } from 'rxjs';
-import { Product } from './models/product';
+
 
 @Injectable({
   providedIn: 'root'
@@ -18,11 +21,11 @@ export class ShoppingCartService {
    * The observable will emit the value of the cart
    * @returns Observable
    */
-  getCart() {
+  getCart() : Observable<ShoppingCart>{
     let cartId = this.getOrCreateCartId();
-    let obs$ = new Observable((observer) => {
+    let obs$ = new Observable<ShoppingCart>((observer) => {
       firebase.database().ref('shopping-carts/' + cartId).on('value', (snapshot) => {
-        observer.next(snapshot.val());
+        observer.next(new ShoppingCart(snapshot.val().items));
       });
     })
     return obs$;
