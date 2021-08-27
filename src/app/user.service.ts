@@ -25,7 +25,6 @@ export class UserService {
     firebase.database().ref('/users/' + user.uid).update({
       name: user.displayName,
       email: user.email,
-      isAdmin: false
     });
   }
 
